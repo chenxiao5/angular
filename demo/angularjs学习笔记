@@ -1,0 +1,38 @@
+angular在1.3版本之后就不再支持全局控制器了
+因此在创建局部控制器时需要按如下进行操作
+    使用模块创建控制器
+    1.html标签的ng-app='app'
+    2.var app = angular.module('app', []);
+        app.controller('PhoneListCtrl', function($scope) {
+            console.log($scope);
+            $scope.phones = [
+                {
+                    'name': 'iphone5',
+                    'snippet': '苹果5'
+                },
+                {
+                    'name': 'iphone6',
+                    'snippet': '苹果6'
+                },
+                {
+                    'name': 'nubia z5mini',
+                    'snippet': '努比亚'
+                }
+            ];
+        });
+
+
+
+ng-form的原理是模拟一个form表单，这个表单中与外界独立开来
+
+在任何一个AngularJS的应用中,都有$injector在进行工作,无论我们知道与否。当编写控制器时,如果没有使用[]标记或进行显式的声 明,$injector就会尝试通过参数名推断依赖关系。
+
+
+所谓的一系列指令、操作、服务均可视为封装后的工具函数
+
+
+provider.config()函数学习
+
+
+何时使用 value()和 constant() 
+value()方法和constant()方法之间最主要的区别是,常量可以注入到配置函数中,而值不行。 通常情况下,可以通过value()来注册服务对象或函数,用constant()来配置数据。

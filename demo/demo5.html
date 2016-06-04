@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="angular.min.js"></script>
+    <script>
+        var app = angular.module('app', []);
+
+        app.controller('PeopleController', function($scope) {
+            $scope.peoples = [
+                {
+                    name: 'name1',
+                    city: 'city1'
+                },
+                {
+                    name: 'name2',
+                    city: 'city2'
+                }
+            ];
+            $scope.p1 = 'zheship1';
+            $scope.p2 = 'zheship2';
+        });
+
+        app.controller('FormController', function($scope) {
+            $scope.fields = [
+                {
+                    placeholder: 'name',
+                    isRequired: true
+                },
+                {
+                    placeholder: 'password',
+                    isRequired: true
+                },
+                {
+                    placeholder: 'email',
+                    isRequired: false
+                }
+            ];
+
+            $scope.submitForm = function() {
+                alert('提交');
+            };
+        });
+
+        app.controller('LotteryController', function($scope) {
+
+            $scope.generateNumber = function() {
+                console.log(this);
+                $scope.isRed = Math.ceil((Math.random() * 10));
+            };
+            console.log(this);
+        });
+    </script>
+    <style>
+        input.ng-invalid {
+            border: 2px solid red;
+        }
+        input.ng-valid {
+            border: 2px solid green;
+        }
+    </style>
+</head>
+<body>
+    <ul ng-controller="PeopleController">
+        <li ng-repeat="people in peoples"
+            ng-class="{ even: !$evnet, odd: !$odd }">
+                {{ people.name }} and {{ people.city }}
+        </li>
+        <p ng-bind-template="{{p1}}{{p2}}"></p>
+    </ul>
+    
+    <form name="userForm"
+        ng-controller="FormController"
+        ng-submit="submitForm()"
+        novalidate>
+        
+        <div ng-repeat="field in fields"
+            ng-form="userFormInput">
+            
+            <input type="text"
+                name="dynamicInput"
+                ng-required="field.isRequired"
+                ng-model="field.name"
+                placeholder="{{ field.placeholder }}">
+            
+            <div ng-show="userFormInput.dynamicInput.$invalid && userFormInput.dynamicInput.$invalid">
+                <span ng-show="userFormInput.dynamicInput.$error.required">
+                    field必填
+                </span>
+            </div>
+        </div>
+
+        <button type="submit"
+            ng-disabled="userFormInput.dynamicInput.$invalid">
+            提交
+        </button>
+    </form>
+
+    <div ng-controller="LotteryController">
+        
+        <div ng-class="{red: isRed > 5}"
+            ng-if="isRed > 5">    
+            isOK!
+        </div>
+
+        <button ng-click="generateNumber()"
+            ng-init="isRed = 0">
+            生成随机数
+        </button>
+
+        <p>随机数事: {{ isRed }}</p>
+    </div>
+</body>
+</html>

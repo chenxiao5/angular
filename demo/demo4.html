@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="angular.min.js"></script>
+    <script>
+        angular.module('app', []);
+    </script>
+</head>
+<body>
+    <form name="userForm" novalidate>
+        <div>
+            <label>name</label>
+            <input type="text"
+                placeholder="name" 
+                name="name"
+                ng-model="user"
+                ng-minlength="3"
+                ng-maxlength="20"
+                required />
+            <div ng-show="userForm.name.$dirty && userForm.name.$invalid">
+                <p ng-show="userForm.name.$error.required">
+                    为空
+                </p>
+                <p ng-show="userForm.name.$error.minlength">
+                    最小值3位
+                </p>
+                <p ng-show="userForm.name.$error.maxlength">
+                    最大值20位
+                </p>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="angular.min.js"></script>
+    <script>
+        var app = angular.module('app', []);
+
+        app.directive('myDirective', function() {
+            return {
+                restrict: 'A',
+                replace: true,
+                scope: {
+                    myUrl: '@',
+                    myText: '@'
+                },
+                template: '<a href="{{ myUrl }}">{{ myText }}</a>'
+            }
+        });
+
+        app.directive('someDirective', function() {
+            return {
+                restrict: 'A',
+                replace: true,
+                scope: {
+                    someAttr: '=someAttroo' 
+                },
+                template: '\
+                    <div>\
+                        <input type="text"\
+                            ng-model="someAttr" />\
+                        <p>\
+                            {{ someAttr }}\
+                        </p>\
+                    </div>\
+                '
+            };
+        });
+    </script>
+</head>
+<body>
+    <div my-directive my-url="http://www.baidu.com" my-text="点击" my-new="假值"></div>
+    <div>
+        <input type="text" ng-model="theirUrl">
+        <div some-directive some-attroo="theirUrl"></div>
+    </div>
+</body>
+</html>

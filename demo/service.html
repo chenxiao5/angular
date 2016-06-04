@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="libs/angular-1.5.6/angular.min.js"></script>
+    <script src="libs/angular-1.5.6/angular-route.min.js"></script>
+    <script>
+        angular.module('app.services', [])
+            .factory('githubService', ['$http', function($http) {
+
+                var githubUrl = 'https://api.github.com';
+
+                var runUserRequest = function(username, path) {
+
+                    return $http({
+                        method: 'JSONP',
+                        url: githubUrl + '/users/' + username + '/' + path + '?callback=JSON_CALLBACK'
+                    });
+                };
+
+                return {
+                    events: function(username) {
+                        return runUserRequest(username, 'events')
+                    }
+                }
+            }])
+
+        angular.module('app', ['app.services'])
+            .controller('serviceController', function($scope, githubService) {
+                $scope.user = {
+                    username: '',
+                    events: ''
+                };
+
+                $scope.getEvents = function() {
+                    var username = $scope.user.username;
+
+                    if (!!username) {
+                        githubService.events(username).success(function(data, status, headers) {
+                            $scope.user.events = data.data;
+                        });
+                    }
+                };
+            });
+    </script>
+</head>
+<body>
+    <div ng-controller="serviceController">
+        <input type="text" ng-model="user.username">
+        <p ng-bind="user.username"></p>
+        <p ng-bind="user.events"></p>
+        <input type="button" ng-click="getEvents()" value="查询">
+        <textarea value="user.events"></textarea>
+    </div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="libs/angular-1.5.6/angular.min.js"></script>
+    <script src="libs/angular-1.5.6/angular-route.min.js"></script>
+    <script>
+        angular.module('app', ['ngRoute'])
+            .config(['$routeProvider', function($routeProvider) {
+                $routeProvider
+                    .when('/', {
+                        templateUrl: 'templateUrl/index.html',
+                        controller: 'indexController'
+                    })
+                    .when('/login', {
+                        templateUrl: 'templateUrl/login.html',
+                        controller: 'loginController'
+                    })
+                    .otherwise({
+                        redirectTo: '/'
+                    })
+
+            }])
+    </script>
+</head>
+<body>
+    <header>
+        <h1>header</h1>
+    </header>
+    
+    <a ui-sref="/">index</a>
+    <a ui-sref="/login">login</a>
+    <a ui-sref="/login/no">otherwise</a>
+
+    <main>
+        <div ng-view></div>
+    </main>
+
+    <footer>
+        <h5>footer</h5>
+    </footer>
+</body>
+</html>

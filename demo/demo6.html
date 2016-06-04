@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="angular.min.js"></script>
+    <script>
+        angular.module('app', [])
+            .controller('TodoListController', function() {
+                var todoList = this;
+                console.log(todoList);
+                // 初始化任务列表
+                todoList.todos = [
+                    {
+                        text: 'text1',
+                        done: false
+                    },
+                    {
+                        text: 'text2',
+                        done: true
+                    }
+                ];
+
+                // 添加任务
+                todoList.addTodo = function() {
+                    todoList.todos.push({
+                        text: todoList.todoText,
+                        done: false
+                    });
+                    todoList.todoText = '';
+                };
+
+                // 统计未完成的数量
+                todoList.remaining = function() {
+                    var count = 0;
+                    angular.forEach(todoList.todos, function(todo) {
+                        count += todo.done ? 0 : 1;
+                    });
+
+                    return count;
+                };
+
+                // 筛选未完成的
+                todoList.archive = function() {
+                    var oldTodos = todoList.todos;
+                    todoList.todos = [];
+                    angular.forEach(oldTodos, function(todo) {
+                        if (!todo.done) todoList.todos.push(todo);
+                    });
+                };
+            });
+    </script>
+    <style>
+        .done-true {
+            text-decoration: line-through;
+            color: grey;
+        }
+    </style>
+</head>
+<body>
+    <h2>任务列表</h2>
+    <div ng-controller="TodoListController as todoList">
+        
+        <span>未完成{{ todoList.remaining() }}/总数{{ todoList.todos.length }}</span>
+        [<a href="javascript:void(0)" ng-click="todoList.archive()">筛选</a>]
+
+        <ul>
+            <li ng-repeat="todo in todoList.todos">
+                <input type="checkbox"
+                    ng-checked="todo.done"
+                    ng-model="todo.done" />
+                <span ng-class="{'done-true': todo.done}">{{ todo.text }}</span>
+            </li>
+        </ul>
+        <form ng-submit="todoList.addTodo()">
+            <input type="text"
+                ng-model="todoList.todoText"
+                size="30"
+                placeholder="新增任务" />
+            <input type="submit" 
+                value="新增" />
+        </form>
+    </div>
+</body>
+</html>
