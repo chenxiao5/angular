@@ -1,0 +1,27 @@
+{
+  "name": "angular",
+  "version": "0.0.1",
+  "description": "\"\"\u001b[D项目结构",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "npm install",
+    "start": "http-server -p 8000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chenxiao5/angular.git"
+  },
+  "author": "minfive",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chenxiao5/angular/issues"
+  },
+  "homepage": "https://github.com/chenxiao5/angular#readme",
+  "devDependencies": {
+    "http-server": "^0.6.1"
+  },
+  "dependencies": {
+    "http-server": "^0.6.1",
+    "karma": "^0.13.22"
+  }
+}

@@ -7,14 +7,40 @@
     <script src="libs/angular-1.5.6/angular-route.min.js"></script>
     <script>
         angular.module('app', ['ngRoute'])
+            .controller('indexController', ['$scope', function($scope) {
+                $scope.param = {};
+                $scope.param.phoneList = [
+                    {
+                        name: 'iphone5',
+                        size: '5dai'
+                    },
+                    {
+                        name: 'iphone6',
+                        size: '6dai'
+                    }
+                ];
+            }])
+            .controller('loginController', ['$scope', function($scope) {
+                $scope.param = {};
+                $scope.param.phoneList = [
+                    {
+                        name: 'iphone7',
+                        size: '7dai'
+                    },
+                    {
+                        name: 'iphone8',
+                        size: '8dai'
+                    }
+                ];
+            }])
             .config(['$routeProvider', function($routeProvider) {
                 $routeProvider
                     .when('/', {
-                        templateUrl: 'templateUrl/index.html',
+                        templateUrl: 'template/index.html',
                         controller: 'indexController'
                     })
                     .when('/login', {
-                        templateUrl: 'templateUrl/login.html',
+                        templateUrl: 'template/login.html',
                         controller: 'loginController'
                     })
                     .otherwise({
@@ -28,10 +54,6 @@
     <header>
         <h1>header</h1>
     </header>
-    
-    <a ui-sref="/">index</a>
-    <a ui-sref="/login">login</a>
-    <a ui-sref="/login/no">otherwise</a>
 
     <main>
         <div ng-view></div>
